@@ -2,7 +2,9 @@
 int main (void){
 	int size,total=0,sum[2];
 	sum[0]=0, sum[1]=0;
-	bool start=false, state=false, sum1 = false;
+	bool state=false, sum1 = false;
+	int start;
+	
 	printf("input size: ");
 	scanf("%d", &size);
 	int num[size];
@@ -12,28 +14,27 @@ int main (void){
 		scanf("%d",&num[i]);
 	}
 	
-	for(int i=0 ; i<size ; i++){
-		//尋找起始正數 
-		if(num[i] > 0){
-			start = true;
-		}
-		if(!start)
-			continue;
-			
+	//find the first of positive numbers
+	for(start=0 ; start<size && num[start]<=0 ; start++);
+	
+	for(int i=start ; i<size ; i++){ 	
 		total += num[i];
 		
 		if(!i)
 			continue;
-		//由正轉負 或 由負轉正	
-		if(num[i-1]<0 && num[i]>=0){
+		// (from negative to positive / from positive to negative)	
+		if(i!=start && num[i-1]<0 && num[i]>=0)
 			sum1=true;
-		}else if(num[i-1]>=0 && num[i]<0)
+		else if(num[i-1]>=0 && num[i]<0)
 			state=true;
   
-		if(state){	//由正轉負要保存目前最佳解 max{sum[0],total,sum[1]}
-			printf("total: %d, result: %d, sum[1]: %d\n",total,sum[0],sum[1]);
-			if(total-num[i] >= sum[0])
+		if(state){	//max{sum[0],total,sum[1]}
+			//printf("total: %d, result: %d, sum[1]: %d\n",total-num[i],sum[0],sum[1]);
+			if(total-num[i] >= sum[0]){
 				sum[0] = total-num[i];
+				sum[1] = 0;
+				sum1 = false;
+			}
 			if(sum[1]>=sum[0]){
 				total = sum[1];
 				sum[0] = sum[1];
@@ -41,10 +42,13 @@ int main (void){
 				sum1 = false;
 			}
 			state = false;
+			printf("sum[1]: %d\n",sum[1]);
 		}
 		
-		if(sum1)
+		if(sum1){
 			sum[1] += num[i];
+			printf("sum[1]: %d\n",sum[1]);
+		}
 	}
 	if(total > sum[0])
 		sum[0] = total;
@@ -52,6 +56,6 @@ int main (void){
 		sum[0] = sum[1];
 		
 	printf("result: %d\n",sum[0]);
-	printf("total: %d, result: %d, sum[1]: %d",total,sum[0],sum[1]);
+	//printf("total: %d, result: %d, sum[1]: %d",total,sum[0],sum[1]);
 	return 0;
 } 
