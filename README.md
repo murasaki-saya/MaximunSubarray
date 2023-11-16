@@ -1,4 +1,4 @@
-# MaximunSubarray
+# MaximunSubarray Problem
 input: a set of number
 output: maximun sum of subarray
 example:
