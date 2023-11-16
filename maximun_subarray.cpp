@@ -42,12 +42,10 @@ int main (void){
 				sum1 = false;
 			}
 			state = false;
-			printf("sum[1]: %d\n",sum[1]);
 		}
 		
 		if(sum1){
 			sum[1] += num[i];
-			printf("sum[1]: %d\n",sum[1]);
 		}
 	}
 	if(total > sum[0])
