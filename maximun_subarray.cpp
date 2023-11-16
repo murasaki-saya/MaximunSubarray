@@ -13,7 +13,7 @@ int main (void){
 	}
 	
 	for(int i=0 ; i<size ; i++){
-		//尋找起始正數 
+		//find the first positive number
 		if(num[i] > 0){
 			start = true;
 		}
@@ -24,7 +24,7 @@ int main (void){
 		
 		if(!i)
 			continue;
-		//由正轉負 或 由負轉正	
+		//from (positive to negative / negative to positive)	
 		if(num[i-1]<0 && num[i]>=0)
 			state=1;
 		else if(num[i-1]>=0 && num[i]<0)
@@ -32,7 +32,7 @@ int main (void){
  
 		if(state==1)
 			sum[1] += num[i]; 
-		else if(!state){	//由正轉負要保存目前最佳解 max{sum[0],total,sum[1]}
+		else if(!state){	//max{sum[0],total,sum[1]}
 			printf("total: %d, result: %d, sum[1]: %d\n",total,sum[0],sum[1]);
 			if(total-num[i] >= sum[0])
 				sum[0] = total-num[i];
