@@ -29,15 +29,13 @@ int main (void){
 			state=true;
   
 		if(state){	//max{sum[0],total,sum[1]}
-			//printf("total: %d, result: %d, sum[1]: %d\n",total-num[i],sum[0],sum[1]);
-			if(total-num[i] >= sum[0]){
+			//printf("result: %d, total: %d, sum[1]: %d\n",sum[0],total-num[i],sum[1]);
+			if(total-num[i] >= sum[0]){	//only if (sum[0]>total && sum[0]>sum[1]) would not reset sum[1]=0
 				sum[0] = total-num[i];
-				sum[1] = 0;
-				sum1 = false;
-			}
-			if(sum[1]>=sum[0]){
-				total = sum[1];
-				sum[0] = sum[1];
+				if(sum[1]>=sum[0]){
+					total = sum[1]+num[i];
+					sum[0] = sum[1];
+				}
 				sum[1] = 0;
 				sum1 = false;
 			}
@@ -48,12 +46,13 @@ int main (void){
 			sum[1] += num[i];
 		}
 	}
+	//to check if postive number is the end of numbers
 	if(total > sum[0])
 		sum[0] = total;
 	if(sum[1] > sum[0])
 		sum[0] = sum[1];
 		
 	printf("result: %d\n",sum[0]);
-	//printf("total: %d, result: %d, sum[1]: %d",total,sum[0],sum[1]);
+	//printf("result: %d, total: %d, sum[1]: %d\n",sum[0],total,sum[1]);
 	return 0;
 } 
